@@ -142,7 +142,7 @@ def add_ingredient(request, recipe_pk):
             ingredient = form.save(commit=False)
             ingredient.recipe = recipe
             ingredient.save()
-            return redirect(to="recipe_detail", pk=recipe.pk)
+            return redirect(to="recipe_detail", recipe_pk=recipe.pk)
     else:  # viewing page for first time
         form = IngredientForm()
 
