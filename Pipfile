@@ -17,6 +17,9 @@ django-environ = "*"
 django-registration-redux = "*"
 django-ordered-model = "*"
 faker = "*"
+psycopg2-binary = "*"
+django-on-heroku = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.8"
