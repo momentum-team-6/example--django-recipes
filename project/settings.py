@@ -169,3 +169,4 @@ if env("USE_EMAIL"):
 
 # Configure Django App for Heroku.
 django_on_heroku.settings(locals())
+del DATABASES['default']['OPTIONS']['sslmode']
