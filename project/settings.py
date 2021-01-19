@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 from pathlib import Path
 
-import django_heroku
 import environ
 
 env = environ.Env(
@@ -166,7 +165,3 @@ if env("USE_EMAIL"):
     EMAIL_HOST_USER = env("EMAIL_HOST_USER")
     EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
     EMAIL_USE_TLS = env("EMAIL_USE_TLS")
-
-# Configure Django App for Heroku.
-django_heroku.settings(locals())
-del DATABASES["default"]["OPTIONS"]["sslmode"]
