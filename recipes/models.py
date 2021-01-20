@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models import Q
+from django.db.models.constraints import UniqueConstraint
 from ordered_model.models import OrderedModel
 
 
@@ -117,7 +118,6 @@ class MealPlan(models.Model):
     recipes = models.ManyToManyField(to=Recipe, related_name="meal_plans")
 
     class Meta:
-        unique_together = [
-            "user",
-            "date",
+        constraints = [
+            UniqueConstraint(fields=['user', 'date'], name="unique_user_date")
         ]
