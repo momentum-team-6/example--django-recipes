@@ -1,7 +1,7 @@
 import datetime
 
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count, Min, F
+from django.db.models import Count, Min, F, Max
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.csrf import csrf_exempt
@@ -12,7 +12,7 @@ from .forms import (
     RecipeForm,
     RecipeStepForm,
 )
-from .models import Recipe, Tag
+from .models import MealPlan, Recipe, Tag
 
 
 def homepage(request):
@@ -24,6 +24,7 @@ def homepage(request):
 
 def recipe_list(request):
     order_field = request.GET.get("order", "title")
+
     recipes = (Recipe.objects.for_user(request.user).annotate(
         times_favorited=Count("favorited_by", distinct=True),
         times_cooked=Count("meal_plans", distinct=True),
@@ -44,6 +45,7 @@ def recipe_detail(request, recipe_pk):
         num_ingredients=Count("ingredients", distinct=True),
         times_cooked=Count("meal_plans", distinct=True),
         first_cooked=Min("meal_plans__date"),
+        last_cooked=Max("meal_plans__date"),
     )
 
     recipe = get_object_or_404(recipes, pk=recipe_pk)
@@ -205,6 +207,7 @@ def show_meal_plan(request, year=None, month=None, day=None):
 
     # https://docs.djangoproject.com/en/3.0/ref/models/querysets/#get-or-create
     meal_plan, _ = request.user.meal_plans.get_or_create(date=date_for_plan)
+    # meal_plan, _ = MealPlan.objects.get_or_create(user=request.user, date=date_for_plan)
     recipes = Recipe.objects.for_user(
         request.user).exclude(pk__in=[r.pk for r in meal_plan.recipes.all()])
 
