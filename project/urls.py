@@ -18,6 +18,7 @@ from django.conf import settings
 from django.urls import include, path
 
 from recipes import views as recipes_views
+from api import views as api_views
 
 urlpatterns = [
     path("", recipes_views.homepage, name="homepage"),
@@ -67,6 +68,13 @@ urlpatterns = [
     path("tags/<str:tag_name>/", recipes_views.view_tag, name="view_tag"),
     path("admin/", admin.site.urls),
     path("accounts/", include("registration.backends.default.urls")),
+    path('api-auth/', include('rest_framework.urls')),
+    path('api/recipes/',
+         api_views.RecipeListCreateView.as_view(),
+         name="api-recipe-list"),
+    path('api/recipes/<int:pk>/',
+         api_views.RecipeDetailView.as_view(),
+         name='api-recipe-detail'),
 ]
 
 if settings.DEBUG:

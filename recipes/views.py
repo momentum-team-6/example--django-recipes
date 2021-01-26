@@ -12,7 +12,7 @@ from .forms import (
     RecipeForm,
     RecipeStepForm,
 )
-from .models import MealPlan, Recipe, Tag
+from .models import Recipe, Tag
 
 
 def homepage(request):
