@@ -2,19 +2,19 @@ from recipes.models import Ingredient, Recipe
 from rest_framework import serializers
 
 
-class IngredientCreateSerializer(serializers.ModelSerializer):
+class IngredientCreateSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Ingredient
-        fields = ('pk', 'recipe', 'amount', 'item')
+        fields = ('url', 'recipe', 'amount', 'item')
 
 
-class IngredientSerializer(serializers.ModelSerializer):
+class IngredientSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Ingredient
-        fields = ('pk', 'amount', 'item')
+        fields = ('url', 'amount', 'item')
 
 
-class RecipeSerializer(serializers.ModelSerializer):
+class RecipeSerializer(serializers.HyperlinkedModelSerializer):
     user = serializers.SlugRelatedField(read_only=True, slug_field='username')
     tags = serializers.SlugRelatedField(many=True,
                                         read_only=True,
@@ -24,7 +24,7 @@ class RecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recipe
         fields = (
-            'pk',
+            'url',
             'user',
             'title',
             'prep_time_in_minutes',
