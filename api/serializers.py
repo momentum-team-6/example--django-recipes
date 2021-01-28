@@ -1,5 +1,17 @@
-from recipes.models import Recipe
+from recipes.models import Ingredient, Recipe
 from rest_framework import serializers
+
+
+class IngredientCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ingredient
+        fields = ('pk', 'recipe', 'amount', 'item')
+
+
+class IngredientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ingredient
+        fields = ('pk', 'amount', 'item')
 
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -7,6 +19,7 @@ class RecipeSerializer(serializers.ModelSerializer):
     tags = serializers.SlugRelatedField(many=True,
                                         read_only=True,
                                         slug_field='tag')
+    ingredients = IngredientSerializer(many=True)
 
     class Meta:
         model = Recipe
@@ -17,5 +30,6 @@ class RecipeSerializer(serializers.ModelSerializer):
             'prep_time_in_minutes',
             'cook_time_in_minutes',
             'tags',
+            'ingredients',
             'public',
         )
