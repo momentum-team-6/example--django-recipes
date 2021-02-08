@@ -81,6 +81,8 @@ urlpatterns = [
     path('api/ingredients/<int:pk>/',
          api_views.IngredientDetailView.as_view(),
          name='ingredient-detail'),
+    path('api/users/<username>/recipes/',
+         api_views.RecipesForUserView.as_view()),
 ]
 
 if settings.DEBUG:
