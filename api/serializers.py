@@ -19,7 +19,7 @@ class RecipeSerializer(serializers.HyperlinkedModelSerializer):
     tags = serializers.SlugRelatedField(many=True,
                                         read_only=True,
                                         slug_field='tag')
-    ingredients = IngredientSerializer(many=True)
+    ingredients = IngredientSerializer(many=True, required=False)
 
     class Meta:
         model = Recipe
@@ -33,3 +33,13 @@ class RecipeSerializer(serializers.HyperlinkedModelSerializer):
             'ingredients',
             'public',
         )
+
+    def create(self, validated_data):
+        ingredients_data = validated_data.pop('ingredients', [])
+        recipe = Recipe.objects.create(**validated_data)
+
+        for ingredient in ingredients_data:
+            recipe.ingredients.create(amount=ingredient['amount'],
+                                      item=ingredient['item'])
+
+        return recipe

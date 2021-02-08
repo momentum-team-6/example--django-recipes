@@ -32,7 +32,7 @@ class IngredientCreateView(CreateAPIView):
     queryset = Ingredient.objects.all()
 
     def perform_create(self, serializer):
-        recipe = Recipe.objects.get(pk=serializer.data['recipe'])
+        recipe = serializer.validated_data['recipe']
         if self.request.user != recipe.user:
             raise PermissionDenied(
                 detail="You are not the owner of this recipe.")
