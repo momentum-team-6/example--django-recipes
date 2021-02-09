@@ -23,6 +23,8 @@ gunicorn = "*"
 djangorestframework = "*"
 markdown = "*"
 pillow = "*"
+boto3 = "*"
+django-storages = "*"
 
 [requires]
 python_version = "3.8"
