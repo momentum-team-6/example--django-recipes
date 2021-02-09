@@ -47,6 +47,7 @@ class Recipe(models.Model):
     favorited_by = models.ManyToManyField(to=User,
                                           related_name="favorite_recipes",
                                           blank=True)
+    image = models.ImageField(blank=True, null=True, upload_to='uploads/')
 
     def get_tag_names(self):
         tag_names = []

@@ -64,7 +64,7 @@ def recipe_detail(request, recipe_pk):
 @login_required
 def add_recipe(request):
     if request.method == "POST":
-        form = RecipeForm(data=request.POST)
+        form = RecipeForm(data=request.POST, files=request.FILES)
 
         if form.is_valid():
             recipe = form.save(commit=False)

@@ -56,6 +56,12 @@ Recipe Book - {{ recipe.title }}
 </ul>
 {% endif %}
 
+{% if recipe.image %}
+<div>
+<img src="{{ recipe.image.url }}" alt="" />
+</div>
+{% endif %}
+
 <h3>Ingredients ({{ recipe.num_ingredients }})</h3>
 
 <ul>

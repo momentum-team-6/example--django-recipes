@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.urls import include, path
+from django.conf.urls.static import static
 
 from recipes import views as recipes_views
 from api import views as api_views
@@ -83,7 +84,7 @@ urlpatterns = [
          name='ingredient-detail'),
     path('api/users/<username>/recipes/',
          api_views.RecipesForUserView.as_view()),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     import debug_toolbar

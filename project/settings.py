@@ -138,6 +138,11 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
+# Media settings
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # Custom user model
 
 AUTH_USER_MODEL = "recipes.User"

@@ -22,6 +22,7 @@ django-on-heroku = "*"
 gunicorn = "*"
 djangorestframework = "*"
 markdown = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.8"

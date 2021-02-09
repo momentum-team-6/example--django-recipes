@@ -32,6 +32,7 @@ class RecipeSerializer(serializers.HyperlinkedModelSerializer):
             'tags',
             'ingredients',
             'public',
+            'image',
         )
 
     def create(self, validated_data):

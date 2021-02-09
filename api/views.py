@@ -2,6 +2,7 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from recipes.models import Ingredient, Recipe, User
 from rest_framework.views import APIView
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.generics import (CreateAPIView, ListCreateAPIView,
                                      RetrieveUpdateDestroyAPIView,
                                      get_object_or_404)
@@ -12,6 +13,7 @@ from api.serializers import (IngredientCreateSerializer, IngredientSerializer,
 
 class RecipeListCreateView(ListCreateAPIView):
     serializer_class = RecipeSerializer
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     def get_queryset(self):
         return Recipe.objects.for_user(self.request.user)
