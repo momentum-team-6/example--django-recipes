@@ -6,6 +6,7 @@ from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.generics import (CreateAPIView, ListCreateAPIView,
                                      RetrieveUpdateDestroyAPIView,
                                      get_object_or_404)
+from rest_framework.pagination import PageNumberPagination
 
 from api.serializers import (IngredientCreateSerializer, IngredientSerializer,
                              RecipeSerializer)
@@ -56,7 +57,10 @@ class IngredientDetailView(RetrieveUpdateDestroyAPIView):
 class RecipesForUserView(APIView):
     def get(self, request, username):
         user = get_object_or_404(User, username=username)
-        serializer = RecipeSerializer(user.recipes.filter(public=True),
+        queryset = user.recipes.filter(public=True)
+        paginator = PageNumberPagination()
+        page = paginator.paginate_queryset(queryset, request, view=self)
+        serializer = RecipeSerializer(page,
                                       many=True,
                                       context={'request': request})
-        return Response(data=serializer.data)
+        return paginator.get_paginated_response(serializer.data)
